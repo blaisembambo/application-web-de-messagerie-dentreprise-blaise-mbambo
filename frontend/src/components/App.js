@@ -1,6 +1,7 @@
 import '../styles/App.css';
 import {io} from 'socket.io-client'
 import {useEffect} from 'react'
+import picture from '../assets/papa-jules.png'
 
 
 function App() {
@@ -12,10 +13,10 @@ function App() {
   return(
     <div className='app-container'>
 
-      /*begining of user profile */
+      {/*begining of user profile */}
       <div className='user-profile'>
         <div className='user-picture-container'>
-          <img src='' className='user-picture' />
+          <img src={picture} className='user-picture profile-picture' />
         </div>
         <div className='conversation-icon-container'>
           <img src='' className='user-picture' />
@@ -24,24 +25,24 @@ function App() {
           <img src='' className='user-picture' />
         </div>
       </div>
-      /*end of user profile */
+      {/*end of user profile */}
 
-      /*begining of conversations and user search */
+      {/*begining of conversations and user search */}
         <div className='recentConversations-userSearch-container'>
             <div className='search-container'>
-              <h3>Recent</h3>
+              
             </div>
             <div className='recentConversations-container'>
-
+              <h3>Recent</h3>
             </div>
         </div>
-      /*end of conversations and user search */
+      {/*end of conversations and user search */}
 
-      /*begining of conversation */
+      {/*begining of conversation */}
       <div className='conversation-container'>
         <div className='contactProfile-cotainer'>
           <div className='contactPicture-container'>
-            <img src='' />
+            <img src={picture} className='contact-profile-picture' />
           </div>
           <div className='contactNameAndStatus'>
             <p className='contact-name'>Swathi</p>
@@ -49,7 +50,7 @@ function App() {
           </div>
         </div>
       </div>
-      /*end of conversation */
+      {/*end of conversation */}
     </div>
   )
 }
