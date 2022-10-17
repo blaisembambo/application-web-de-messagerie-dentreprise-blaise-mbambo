@@ -49,6 +49,20 @@ function App() {
             <p className='contact-status'>online</p>
           </div>
         </div>
+        <div className='messagescontainerandinputscontainer'>
+          <div className='messages-container'>
+                kk
+          </div>
+          <div className='inputscontainer'>
+            <div className='textandfileinputs'>
+              <input type='text' />
+              <span className='file-input' style={{border:'1px solid black'}}>pic</span>
+            </div>
+            <div className='sendbuttoncontainer'>
+              <button>send</button>
+            </div>
+          </div>
+        </div>
       </div>
       {/*end of conversation */}
     </div>

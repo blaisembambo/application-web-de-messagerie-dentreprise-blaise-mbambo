@@ -23,8 +23,8 @@ body{
 }
 
 .user-picture-container{
-  width: 90px;
-  height: 90px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
   overflow: hidden;
   margin: auto;
@@ -57,10 +57,13 @@ body{
   width: 50vw;
   border-radius: 15px;
   padding: 20px 30px;
+  display: flex;
+  flex-direction: column;
 }
 
 .contactProfile-cotainer{
   display: flex;
+  padding-bottom: 15px;
   border-bottom: 2px solid #E7E7E7;
 }
 
@@ -74,6 +77,28 @@ body{
 .contactNameAndStatus{
  margin: auto;
 }
+
+.contactNameAndStatus p{
+  margin: 1px;
+ }
 .contact-name{
   font-weight: bold;
+}
+.contact-status{
+  font-size: 14px;
+  text-align: center;
+}
+
+.messagescontainerandinputscontainer{
+ margin-top: auto;
+}
+
+.messages-container{
+padding: 30px 0;
+}
+
+.inputscontainer{
+  display: flex;
+  border-top: 2px solid #E7E7E7;
+  padding-top: 20px;
 }
