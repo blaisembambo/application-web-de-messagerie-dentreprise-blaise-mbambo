@@ -1,0 +1,25 @@
+body{
+    background: #1966FF;
+}
+.login-wrapper{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items:flex-end;
+}
+.login-container{
+    width: 40vw;
+    height: auto;
+    background: #FFF;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.login-container label{
+    display: block;
+}
+.login-title, .login-form{
+    border: 1px solid black;
+}
