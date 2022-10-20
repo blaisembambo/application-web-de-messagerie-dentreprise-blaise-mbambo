@@ -1,13 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './styles/index.css';
-import App from './components/App';
+import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter } from 'react-router-dom';
+import { StateProvider } from './utils/stateProvider';
+import reducer, {initialState} from './utils/reducer';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <StateProvider initialState={initialState} reducer={reducer}>
+        <App />
+      </StateProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );
 

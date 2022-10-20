@@ -1,13 +1,19 @@
 const {User} = require('../models/userSchema')
 
-const getUser = (req,res) => {
+const getUser2 = (req,res) => {
     User.findById(req.params.id)
         .then(user => res.json(user))
         .catch(err => res.json(err))
 }
 
+const getUser = (req,res) => {
+    User.findOne({email :req.body.email, password : req.body.password})
+    .then(user => res.json(user))
+    .catch(err => res.json(err))
+}
+
 const getUsers = (req,res) => {
-    User.find({...req.body})
+    User.find()
         .then(users => res.json(users))
         .catch(err => res.json(err))
 }
@@ -33,4 +39,4 @@ const createUser = (req,res) => {
     }
 }
 
-module.exports = {getUser,getUsers,createUser}
+module.exports = {getUser,getUser2,getUsers,createUser}

@@ -1,15 +1,27 @@
 import '../styles/Chat.css';
 import {io} from 'socket.io-client'
-import {useEffect} from 'react'
+import {useEffect, useState} from 'react'
 import picture from '../assets/papa-jules.png'
+import axios from 'axios';
+import User from '../components/User';
+import {useStateValue} from '../utils/stateProvider'
+
 
 
 function Chat() {
+  const [state,dispatch] = useStateValue()
   
   // useEffect(function(){
   //   const socket = io('http://localhost:4000')
   // },[])
 
+  const [users,setUsers] = useState([])
+  console.log('from chat ',state.user)
+  useEffect(() => {
+    axios.get('http://localhost:4000/users/')
+    .then(users => setUsers(users.data))
+    .catch(err => console.log(err))
+  },[])
   return(
     <div className='chat-container'>
 
@@ -32,9 +44,12 @@ function Chat() {
             <div className='search-container'>
               
             </div>
+          <div className='recentConversations-wrapper'>
+            <h3>Recent</h3>
             <div className='recentConversations-container'>
-              <h3>Recent</h3>
+              {users.map((user,index) => <User key={user + '' + index} userName = {user.firstName}/>)}
             </div>
+          </div>
         </div>
       {/*end of conversations and user search */}
 
@@ -42,10 +57,10 @@ function Chat() {
       <div className='conversation-container'>
         <div className='contactProfile-cotainer'>
           <div className='contactPicture-container'>
-            <img src={picture} className='contact-profile-picture' />
+            <img src={picture} className='user-profile-picture-in-conversation' />
           </div>
           <div className='contactNameAndStatus'>
-            <p className='contact-name'>Swathi</p>
+            <p className='contact-name'>{state.user ? state.user.firstName : ''}</p>
             <p className='contact-status'>online</p>
           </div>
         </div>

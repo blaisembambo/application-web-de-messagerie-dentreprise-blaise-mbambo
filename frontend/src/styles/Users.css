@@ -1,0 +1,19 @@
+.usercontainer{
+    display: flex;
+    align-items: center;
+}
+.userpicturecontainer{
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  .userpicture{
+    width: 100%;
+    height: 100%;
+  }
+
+  .userinfos{
+    display: flex;
+    flex-direction: column;
+  }
