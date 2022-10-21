@@ -1,6 +1,11 @@
-.usercontainer{
-    display: flex;
-    align-items: center;
+.userlinked{
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: black;
+  padding: 7px 0;
+  margin: 3px 0;
+  border-bottom: 1px solid #E7E7E7;
 }
 .userpicturecontainer{
     width: 55px;
@@ -16,4 +21,13 @@
   .userinfos{
     display: flex;
     flex-direction: column;
+    margin-left: 15px;
+  }
+  .contactname{
+    font-weight: 500;
+    margin-bottom: 3px;
+  }
+  .contactlastmessage{
+    font-size: 11px;
+    color: #797979;
   }

@@ -11,6 +11,7 @@ import stateContext from './utils/stateProvider';
 import {useStateValue} from './utils/stateProvider'
 import NavigateToChat from './pages/NavigateToChat';
 import NavigateToLogin from './pages/NavigateToLoggin';
+import Messages from './pages/Messages';
 
 
 
@@ -36,8 +37,8 @@ function App() {
               {console.log(state.userLoggedIn)}
                     <Route path='/' element={<NavigateToLogin />}/>
                     <Route path='/' element={<NavigateToChat />}/>
-                    <Route  path='/app' element={<Chat /> }>
-                      <Route path='/:id' ></Route>
+                    <Route  path='/app/:userid' element={<Chat /> }>
+                      <Route path=':contactid' element={<Messages /> }/>
                     </Route>
                     <Route  path='/signup' element={<Signup /> }/>
                     <Route  path='/login' element={<Login /> }/>

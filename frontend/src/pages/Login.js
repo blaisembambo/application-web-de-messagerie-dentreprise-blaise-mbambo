@@ -26,7 +26,7 @@ export default function Login() {
             })
             .then(res => {
                 if(res.data){
-                    navigate('/app')
+                    navigate('/app/'+res.data._id)
                     dispatch({type:'setUser',payload:res.data})
                     dispatch({type:'setUserLoggedIn'})
                 }

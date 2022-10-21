@@ -1,6 +1,8 @@
 export const initialState = {
     userLoggedIn:false,
-    user:{}
+    user:{},
+    currentContact:{},
+    messages:{}
   }
 
 const reducer = (state,action) => {
@@ -11,6 +13,14 @@ const reducer = (state,action) => {
         
         case 'setUser' : {
             return {...state,['user']:action.payload}
+        }
+
+        case 'setCurrentContact' : {
+            return {...state,['currentContact']:action.payload}
+        }
+
+        case 'setMessages' : {
+            return {...state,['messages']:action.payload}
         }
     
         default:
