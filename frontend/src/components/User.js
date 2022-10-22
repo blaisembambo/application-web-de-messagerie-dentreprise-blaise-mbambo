@@ -13,7 +13,8 @@ export default function User({user,pic,lastMessage}){
         dispatch({type:'setCurrentContact',payload:user})
 
         axios.post('http://localhost:4000/messages',{
-
+            senderId : state.user._id,
+            receiverId : state.currentContact._id,
         })
         .then(res => {
           console.log(res.data)

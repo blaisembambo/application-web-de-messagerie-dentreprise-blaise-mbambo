@@ -12,6 +12,12 @@ const getMessages = (req,res) => {
         .catch(err => res.json(err))
 }
 
+const getConversion = (req,res) => {
+    Message.find(req.body)
+        .then(messages => res.json(messages))
+        .catch(err => res.json(err))
+}
+
 const createMessage = (req,res) => {
     Message.create({
         senderId : req.body.senderId,
