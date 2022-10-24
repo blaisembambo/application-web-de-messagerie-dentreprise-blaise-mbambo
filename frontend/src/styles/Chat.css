@@ -70,6 +70,9 @@ body{
   padding-right: 10px;
 }
 
+.userlinked:last-child{
+  border: none;
+ }
 
 .conversation-container{
   background: #FFF;
@@ -80,14 +83,11 @@ body{
   flex-direction: column;
 }
 
-.userlinked:last-child{
- border: none;
-}
-
 .contactProfile-cotainer{
   display: flex;
   padding-bottom: 15px;
   border-bottom: 2px solid #E7E7E7;
+  flex: 15%;
 }
 
 .contactPicture-container{
@@ -113,11 +113,24 @@ body{
 }
 
 .messagescontainerandinputscontainer{
- margin-top: auto;
+ /* border: 1px yellow solid; */
+ flex: 85%;
+ position: relative;
+}
+.messagescontainerandinputswrapper{
+  position: absolute;
+  bottom: 0;
+  /* border: 1px solid green; */
+  width: 100%;
 }
 
 .messages-container{
 padding: 20px 0;
+/* border: 1px solid black; */
+overflow-y: scroll;
+padding-right: 10px;
+height: 375px;
+/* height: 640px; */
 }
 
 .inputscontainer{

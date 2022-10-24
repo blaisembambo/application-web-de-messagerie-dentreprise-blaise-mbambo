@@ -33,6 +33,20 @@ function Chat() {
               console.log(err)
             })
 
+    axios.post('http://localhost:4000/messages/conversation',{
+            senderId : state.user._id,
+            receiverId : state.currentContact._id,
+        })
+        .then(res => {
+            dispatch({type:'setMessages',payload:res.data})
+          console.log(res.data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+
+        setInput(prev => ({...prev,['message']:''}))
+
   }
   
   // useEffect(function(){
@@ -47,7 +61,7 @@ function Chat() {
     .catch(err => console.log(err))
   },[])
 
-
+console.log(input)
   return(
     <div className='chat-container'>
 
@@ -91,17 +105,19 @@ function Chat() {
           </div>
         </div>
         <div className='messagescontainerandinputscontainer'>
-          <div className='messages-container'>
-                <Outlet/>
-          </div>
-          <div className='inputscontainer'>
-            <div className='textandfileinputs'>
-              <input type='text' onChange={handleInputChange} name='message' id='message' className='messageinput' />
-              <span className='file-input' style={{border:'1px solid black'}}>pic</span>
-            </div>
-            <div className='sendbuttoncontainer'>
-              <button onClick={() => sendMessage(state.user._id,state.currentContact._id,input.message)}>send</button>
-            </div>
+          <div className='messagescontainerandinputswrapper'>
+              <div className='messages-container'>
+                    <Outlet/>
+              </div>
+              <div className='inputscontainer'>
+                <div className='textandfileinputs'>
+                  <input type='text' onChange={handleInputChange} name='message' id='message' className='messageinput' value={input.message} />
+                  <span className='file-input' style={{border:'1px solid black'}}>pic</span>
+                </div>
+                <div className='sendbuttoncontainer'>
+                  <button onClick={() => sendMessage(state.user._id,state.currentContact._id,input.message)}>send</button>
+                </div>
+              </div>
           </div>
         </div>
       </div>

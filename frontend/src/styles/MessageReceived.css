@@ -1,0 +1,25 @@
+.received-message-container{
+    display: flex;
+    justify-content: flex-start;
+}
+
+.received-message-content{
+    padding: 10px;
+    background: #cfcfcf;
+    margin: 5px;
+    max-width: 70%;
+    border-radius: 10px;
+    position: relative;
+    font-size: 14px;
+}
+
+.received-message-triangle {
+	width: 0;
+	height: 0;
+	border-left: 8px solid transparent;
+	border-right: 8px solid transparent;
+	border-bottom: 20px solid red;
+    position: absolute;
+    bottom: 0;
+    left: -10px;
+}

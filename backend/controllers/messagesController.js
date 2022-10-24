@@ -13,7 +13,12 @@ const getMessages = (req,res) => {
 }
 
 const getConversion = (req,res) => {
-    Message.find(req.body)
+    Message.find({
+        $or: [
+            { $and: [ { senderId: req.body.receiverId }, { receiverId: req.body.senderId } ] },
+            { $and: [ { senderId: req.body.senderId }, { receiverId: req.body.receiverId } ] }
+        ]
+    })
         .then(messages => res.json(messages))
         .catch(err => res.json(err))
 }
@@ -28,4 +33,4 @@ const createMessage = (req,res) => {
     .catch(err  => res.json(err))
 }
 
-module.exports = {getMessage,getMessages,createMessage}
+module.exports = {getMessage,getMessages,createMessage,getConversion}

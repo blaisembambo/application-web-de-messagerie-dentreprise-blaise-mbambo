@@ -2,7 +2,7 @@ export const initialState = {
     userLoggedIn:false,
     user:{},
     currentContact:{},
-    messages:{}
+    messages:[]
   }
 
 const reducer = (state,action) => {

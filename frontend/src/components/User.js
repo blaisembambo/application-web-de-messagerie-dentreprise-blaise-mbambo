@@ -12,11 +12,12 @@ export default function User({user,pic,lastMessage}){
     const handleUserClicked = () => {
         dispatch({type:'setCurrentContact',payload:user})
 
-        axios.post('http://localhost:4000/messages',{
+        axios.post('http://localhost:4000/messages/conversation',{
             senderId : state.user._id,
             receiverId : state.currentContact._id,
         })
         .then(res => {
+            dispatch({type:'setMessages',payload:res.data})
           console.log(res.data)
         })
         .catch(err => {

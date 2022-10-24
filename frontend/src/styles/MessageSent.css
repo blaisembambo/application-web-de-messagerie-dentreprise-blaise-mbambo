@@ -1,0 +1,26 @@
+.sent-message-container{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.sent-message-content{
+    padding: 10px;
+    background: #1966ff;
+    margin: 5px;
+    max-width: 70%;
+    border-radius: 10px;
+    position: relative;
+    color: white;
+    font-size: 14px;
+}
+
+.sent-meesage-triangle {
+	width: 0;
+	height: 0;
+	border-left: 8px solid transparent;
+	border-right: 8px solid transparent;
+	border-bottom: 20px solid red;
+    position: absolute;
+    bottom: 0;
+    left: -10px;
+}
