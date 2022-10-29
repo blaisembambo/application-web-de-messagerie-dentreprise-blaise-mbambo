@@ -2,7 +2,8 @@ export const initialState = {
     userLoggedIn:false,
     user:{},
     currentContact:{},
-    messages:[]
+    messages: [],
+    room:""
   }
 
 const reducer = (state,action) => {
@@ -21,6 +22,10 @@ const reducer = (state,action) => {
 
         case 'setMessages' : {
             return {...state,['messages']:action.payload}
+        }
+            
+        case 'setRoom' : {
+            return {...state,['room']:action.payload}
         }
     
         default:

@@ -1,11 +1,13 @@
 import '../styles/Chat.css';
-import {io} from 'socket.io-client'
+import socket from '../utils/socketIo';
 import {useEffect, useState} from 'react'
 import picture from '../assets/papa-jules.png'
 import axios from 'axios';
 import User from '../components/User';
 import {useStateValue} from '../utils/stateProvider'
 import { Outlet } from 'react-router-dom';
+import { BsChatDotsFill } from "react-icons/bs"
+import {GoSignOut} from "react-icons/go"
 
 
 function Chat() {
@@ -19,49 +21,28 @@ function Chat() {
   const handleInputChange = e => {
     setInput(prevState => ({...prevState,[e.target.name]:e.target.value}))
   }
-
-  const sendMessage = (senderId,receiverId,message) => {
-    axios.post('http://localhost:4000/messages',{
-                senderId : senderId,
-                receiverId : receiverId,
-                content : message
-            })
-            .then(res => {
-              console.log(res.data)
-            })
-            .catch(err => {
-              console.log(err)
-            })
-
-    axios.post('http://localhost:4000/messages/conversation',{
-            senderId : state.user._id,
-            receiverId : state.currentContact._id,
-        })
-        .then(res => {
-            dispatch({type:'setMessages',payload:res.data})
-          console.log(res.data)
-        })
-        .catch(err => {
-          console.log(err)
-        })
+  
+  
+  const sendMessage = (senderId, receiverId, content, room) => {
+    
+    socket.emit("sendMessage", { senderId, receiverId, content, room })
+    socket.on("getMessages", data => {
+      dispatch({ type: 'setMessages', payload: data })
+    })
 
         setInput(prev => ({...prev,['message']:''}))
 
   }
-  
-  // useEffect(function(){
-  //   const socket = io('http://localhost:4000')
-  // },[])
 
   const [users,setUsers] = useState([])
-  console.log('from chat ',state.user)
+  
   useEffect(() => {
     axios.get('http://localhost:4000/users/')
     .then(users => setUsers(users.data))
-    .catch(err => console.log(err))
+    .catch(err => err)
   },[])
 
-console.log(input)
+console.log(state)
   return(
     <div className='chat-container'>
 
@@ -71,10 +52,10 @@ console.log(input)
           <img src={picture} className='user-picture profile-picture' />
         </div>
         <div className='conversation-icon-container'>
-          <img src='' className='user-picture' />
+          <BsChatDotsFill />
         </div>
         <div className='logout-icon-container'>
-          <img src='' className='user-picture' />
+          <GoSignOut />
         </div>
       </div>
       {/*end of user profile */}
@@ -87,7 +68,7 @@ console.log(input)
           <div className='recentConversations-wrapper'>
             <h3>Recent</h3>
             <div className='recentConversations-container'>
-              {users.map((user,index) =><User key={user + '' + index} user = {user}/>)}
+              {users.map((user,index) => user._id === state.user._id ? '' : <User key={user + '' + index} user = {user}/>)}
             </div>
           </div>
         </div>
@@ -107,7 +88,9 @@ console.log(input)
         <div className='messagescontainerandinputscontainer'>
           <div className='messagescontainerandinputswrapper'>
               <div className='messages-container'>
+                  <div className='messages-wrapper'>
                     <Outlet/>
+                  </div>
               </div>
               <div className='inputscontainer'>
                 <div className='textandfileinputs'>
@@ -115,7 +98,7 @@ console.log(input)
                   <span className='file-input' style={{border:'1px solid black'}}>pic</span>
                 </div>
                 <div className='sendbuttoncontainer'>
-                  <button onClick={() => sendMessage(state.user._id,state.currentContact._id,input.message)}>send</button>
+                  <button onClick={() => sendMessage(state.user._id,state.currentContact._id,input.message,state.room)}>send</button>
                 </div>
               </div>
           </div>

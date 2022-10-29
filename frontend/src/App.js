@@ -31,10 +31,7 @@ function App() {
 
  
     <div className='app-container'>
-      
-       <button onClick={() => {dispatch({type:'setUserLoggedIn'})}}>update state</button>
             <Routes>
-              {console.log(state.userLoggedIn)}
                     <Route path='/' element={<NavigateToLogin />}/>
                     <Route path='/' element={<NavigateToChat />}/>
                     <Route  path='/app/:userid' element={<Chat /> }>

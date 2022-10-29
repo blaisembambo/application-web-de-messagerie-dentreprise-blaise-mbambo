@@ -34,14 +34,13 @@ export default function Login() {
                     navigate('/')
                 }
             })
-            .catch(err => console.log('erreur ', err))
+            .catch(err =>err)
 
     }
     
-    console.log(' state value',state)
+   
     return(
         <div className='login-wrapper'>
-            <button onClick={() => {dispatch({type:'setUserLoggedIn'})}}>update state</button>
             <div className='login-container'>
                 <h2 className='login-title'>CONNECTEZ-VOUS</h2>
                 <hr className='underline' />
