@@ -17,7 +17,7 @@ export default function Signup() {
     }
 
     const handleClickToSubmit = () => {
-        if(input.password == input.confirmpassword){
+        if(input.password === input.confirmpassword){
             axios.post('http://localhost:4000/users/',{
                 firstname : input.firstname,
                 lastname : input.lastname,

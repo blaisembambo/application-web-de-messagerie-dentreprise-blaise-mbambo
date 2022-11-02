@@ -6,8 +6,12 @@ import axios from 'axios';
 import User from '../components/User';
 import {useStateValue} from '../utils/stateProvider'
 import { Outlet } from 'react-router-dom';
-import { BsChatDotsFill } from "react-icons/bs"
-import {GoSignOut} from "react-icons/go"
+import { BsChatDotsFill } from "react-icons/bs";
+import { GoSignOut } from "react-icons/go";
+import { BsEmojiSmile } from "react-icons/bs";
+import { AiOutlineCamera } from "react-icons/ai";
+import { BiSend } from "react-icons/bi";
+import 'emoji-picker-element';
 
 
 function Chat() {
@@ -25,6 +29,7 @@ function Chat() {
   
   const sendMessage = (senderId, receiverId, content, room) => {
     
+    if(content.content === "") return
     socket.emit("sendMessage", { senderId, receiverId, content, room })
     socket.on("getMessages", data => {
       dispatch({ type: 'setMessages', payload: data })
@@ -34,15 +39,42 @@ function Chat() {
 
   }
 
-  const [users,setUsers] = useState([])
+  const [users, setUsers] = useState([])
   
   useEffect(() => {
     axios.get('http://localhost:4000/users/')
     .then(users => setUsers(users.data))
     .catch(err => err)
-  },[])
+  }, [])
+  
+  const [emojiPickerContainerStyle, setEmojiPickerContainerStyle] = useState({
+    display:'none'
+  })
+  
+  function handleEmojiIconOnClick() {
+    setEmojiPickerContainerStyle(prev => prev.display === 'block' ? ({display:'none'}) : ({display:'block'}))
+  }
 
-console.log(state)
+  function handleCameraIconOnclick() {
+  const myWidget = window.cloudinary.createUploadWidget({
+  cloudName: 'bintole', 
+  uploadPreset: 'sds1g2ni'}, (error, result) => { 
+    if (!error && result && result.event === "success") { 
+      console.log('Done! Here is the image info: ', result.info);
+      sendMessage(state.user._id,state.currentContact._id,{type:"image",url:result.info.url,public_id:result.info.public_id},state.room)
+    }
+  }
+  )
+    myWidget.open();
+  }
+
+  useEffect(() => {
+    document.querySelector('emoji-picker')
+    .addEventListener('emoji-click', event => {
+      setInput(prev => ({...prev,"message":prev.message + event.detail.unicode}))
+    });
+},[])
+  // console.log(state.messages)
   return(
     <div className='chat-container'>
 
@@ -51,7 +83,7 @@ console.log(state)
         <div className='user-picture-container'>
           <img src={picture} className='user-picture profile-picture' />
         </div>
-        <div className='conversation-icon-container'>
+        <div title='cliquez pour ouvrir les conversations' className='conversation-icon-container'>
           <BsChatDotsFill />
         </div>
         <div className='logout-icon-container'>
@@ -66,7 +98,7 @@ console.log(state)
               <input type='text' onChange={handleInputChange} name='search' id='search' className='searchinput' />
             </div>
           <div className='recentConversations-wrapper'>
-            <h3>Recent</h3>
+            <h3>Utilisateurs</h3>
             <div className='recentConversations-container'>
               {users.map((user,index) => user._id === state.user._id ? '' : <User key={user + '' + index} user = {user}/>)}
             </div>
@@ -93,13 +125,19 @@ console.log(state)
                   </div>
               </div>
               <div className='inputscontainer'>
-                <div className='textandfileinputs'>
+                <div className='textemojiandfileinputs'>
                   <input type='text' onChange={handleInputChange} name='message' id='message' className='messageinput' value={input.message} />
-                  <span className='file-input' style={{border:'1px solid black'}}>pic</span>
+                  <div className='emojiandphotoicons'>
+                    <span className='emoji-icon-container' onClick={handleEmojiIconOnClick}><BsEmojiSmile /></span>
+                    <span className='media-input-container' onClick={handleCameraIconOnclick}><AiOutlineCamera /></span>
+                  <div className='emoji-picker-container' style={emojiPickerContainerStyle}>
+                    <emoji-picker></emoji-picker>
+                  </div>
                 </div>
-                <div className='sendbuttoncontainer'>
-                  <button onClick={() => sendMessage(state.user._id,state.currentContact._id,input.message,state.room)}>send</button>
                 </div>
+                {/* <div className='sendbuttoncontainer'> */}
+                  <button className='sendbutton' onClick={() => sendMessage(state.user._id,state.currentContact._id,{type:"text",content:input.message},state.room)}><BiSend /></button>
+                {/* </div> */}
               </div>
           </div>
         </div>

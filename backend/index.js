@@ -33,9 +33,9 @@ io.on('connection', socket => {
         receiverId : data.receiverId,
         content : data.content,
         sentDateAndTime : new Date()
-     }).then(message => message)
+  }).then(message => message)
     .catch(err => err)
-    console.log("message sent")
+    // console.log("message sent")
     
     await Message.find({
       $or: [

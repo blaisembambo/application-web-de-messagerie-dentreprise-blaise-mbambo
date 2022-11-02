@@ -23,6 +23,7 @@ body{
   border-radius: 15px;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .user-picture-container{
@@ -46,11 +47,11 @@ body{
   border-bottom-left-radius: 15px;
   border-top-left-radius: 15px;
   border-right: 4px solid #FFE921;
-  padding: 10px 0;
+  padding: 13px 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 75%;
+  width: 50%;
   margin-left: auto;
   cursor: pointer;
 }
@@ -61,12 +62,12 @@ body{
 }
 
 .logout-icon-container{
-  border: 1px solid black;
   margin-top: auto;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: 30px;
+  cursor: pointer;
 }
 
 .logout-icon-container svg{
@@ -175,5 +176,67 @@ flex-direction: column;
 .inputscontainer{
   display: flex;
   border-top: 2px solid #E7E7E7;
-  padding-top: 20px;
+  padding:20px 0 10px 0;
+  align-items: center;
+}
+.textemojiandfileinputs{
+  width: 90%;
+  padding: 5px;
+  display: flex;
+  background: #E0E0E0;
+  border-radius: 10px;
+  position: relative;
+}
+.messageinput{
+  width: 90%;
+  background-color: #E0E0E0;
+  border: none;
+  outline: none;
+  padding: 0 10px;
+}
+.emojiandphotoicons{
+  /* width: 10%;
+  height:100% ; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.emoji-icon-container, .media-input-container{
+  padding: 4px;
+  cursor: pointer;
+}
+.media-input-container{
+
+}
+.emoji-icon-container svg{
+  width: 20px;
+  height: 20px;
+}
+.media-input-container svg{
+    width: 24px;
+    height: 24px;
+}
+.emoji-picker-container{
+  position: absolute;
+  top: -402px;
+  right: 0;
+  display: none;
+}
+.sendbutton{
+  width: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #1966FF;
+  padding: 9px;
+  border-radius: 10px;
+  margin-left: 15px;
+  border: none;
+  cursor: pointer;
+}
+
+.sendbutton svg {
+  width: 23px;
+  height: 23px;
+  fill: white;
 }

@@ -12,7 +12,7 @@ const messageSchema = new Schema({
         required:true
     },
     content : {
-        type : String,
+        type : Object,
         required:true
     },
     sentDateAndTime : {
