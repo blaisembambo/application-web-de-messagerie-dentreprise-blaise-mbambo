@@ -20,8 +20,8 @@ export default function User({user,pic,lastMessage}){
     useEffect(() => {
         let room = (state.user._id +""+ state.currentContact._id).split("").sort().join("");
         dispatch({ type: 'setRoom', payload: room })
-        socket.emit("join-room", room)//state.user._id + "-" + state.currentContact._id
-        axios.post('http://localhost:4000/messages/conversation',{
+        socket.emit("join-room", room)
+        axios.post(process.env.REACT_APP_ENDPOINT_TO_GET_A_CONVERSATION,{
             senderId : state.user._id,
             receiverId : state.currentContact._id,
         })

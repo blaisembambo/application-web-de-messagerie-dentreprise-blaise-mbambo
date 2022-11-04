@@ -2,7 +2,9 @@ import '../styles/Login.css'
 import axios from 'axios'
 import { useState,useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-import {useStateValue} from '../utils/stateProvider'
+import { useStateValue } from '../utils/stateProvider'
+import { Link } from 'react-router-dom'
+
 
 export default function Login() {
 
@@ -20,7 +22,7 @@ export default function Login() {
 
     const handleClickToSubmit = () => {
         
-            axios.post('http://localhost:4000/users/1',{
+            axios.post(process.env.REACT_APP_ENDPOINT_TO_GET_ONE_USER,{
                 email :input.email,
                 password : input.password
             })
@@ -37,8 +39,7 @@ export default function Login() {
             .catch(err =>err)
 
     }
-    
-   
+
     return(
         <div className='login-wrapper'>
             <div className='login-container'>
@@ -53,7 +54,7 @@ export default function Login() {
                         <span className='labeltext'>Mot de passe</span>
                         <input type="password" onChange={handleInputChange} name='password' id='password' className='forminput' />
                     </label>
-                    <div><span>Vous n'avez pas de compte ? </span><a href='#' className="">inscivez-vous</a></div>
+                    <div><span>Vous n'avez pas de compte ? </span><Link to="/signup" className="">inscivez-vous</Link></div>
                     <div className="connection-button-container">
                         <button onClick={handleClickToSubmit}>SE CONNECTER</button>
                     </div>

@@ -20,9 +20,6 @@ function App() {
 
   const [state,dispatch] = useStateValue()
   
-  // useEffect(function(){
-  //   const socket = io('http://localhost:4000')
-  // },[])
 
   const navigate = useNavigate()
 

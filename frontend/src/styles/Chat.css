@@ -88,6 +88,26 @@ body{
   background: #FFFFFF;
   margin-bottom: 20px;
   border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 10px;
+}
+.search-input-container{
+  width: 82%;
+  text-align: center;
+}
+.searchinput{
+  width: 100%;
+  border: none;
+  outline: none;
+  
+}
+.search-icon{
+  margin: 8px auto 8px 8px;
+}
+.three-dot-icon{
+  margin: 8px 8px 8px auto;
 }
 
 .recentConversations-wrapper{
@@ -148,15 +168,14 @@ body{
 }
 
 .messagescontainerandinputscontainer{
- /* border: 1px yellow solid; */
  flex: 85%;
  position: relative;
 }
 .messagescontainerandinputswrapper{
   position: absolute;
   bottom: 0;
-  /* border: 1px solid green; */
   width: 100%;
+  height: 100%;
 }
 
 .messages-container{
@@ -164,7 +183,7 @@ padding: 20px 0;
 /* border: 1px solid black; */
 overflow-y: scroll;
 padding-right: 10px;
-height: 375px;
+height: 85%;
 display: flex;
 flex-direction: column;
 /* height: 640px; */
@@ -178,6 +197,7 @@ flex-direction: column;
   border-top: 2px solid #E7E7E7;
   padding:20px 0 10px 0;
   align-items: center;
+  height: 15%;
 }
 .textemojiandfileinputs{
   width: 90%;
@@ -194,9 +214,10 @@ flex-direction: column;
   outline: none;
   padding: 0 10px;
 }
+.file-input{
+  display: none;
+}
 .emojiandphotoicons{
-  /* width: 10%;
-  height:100% ; */
   display: flex;
   justify-content: center;
   align-items: center;

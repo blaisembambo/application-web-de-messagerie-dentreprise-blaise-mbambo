@@ -15,7 +15,7 @@ export default function MessageSent({message}) {
     const [cld, setCld] = useState(
                 new Cloudinary({
             cloud: {
-            cloudName: 'bintole'
+            cloudName: process.env.REACT_APP_CLOUDINARY_CLOUDNAME
             }
         })
     );
@@ -34,9 +34,9 @@ export default function MessageSent({message}) {
                 {
                     content.type === "text" ? content.content
                         : 
-                        <div>
+                        <a className='image-linked' href={content.url} target="_blank">
                             <AdvancedImage cldImg={img} />
-                        </div>
+                        </a>
                 }
                 {/* <div class="triangle"></div> */}
             </div>

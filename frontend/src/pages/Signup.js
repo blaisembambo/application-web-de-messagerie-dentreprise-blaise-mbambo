@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import '../styles/Signup.css'
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 export default function Signup() {
 
@@ -18,7 +19,7 @@ export default function Signup() {
 
     const handleClickToSubmit = () => {
         if(input.password === input.confirmpassword){
-            axios.post('http://localhost:4000/users/',{
+            axios.post(process.env.REACT_APP_ENDPOINT_TO_CREATE_AND_GET_USERS,{
                 firstname : input.firstname,
                 lastname : input.lastname,
                 image :'image',
@@ -31,7 +32,7 @@ export default function Signup() {
             .catch(err => console.log('erreur ', err))
         }
 
-        if(input.password != input.confirmpassword){
+        if(input.password !== input.confirmpassword){
             
         }
     }
@@ -64,7 +65,7 @@ export default function Signup() {
                     </label>
                     <div>
                         <span>Êtes-vous déjà inscrit ? </span>
-                        <a href='#' className="">Connectez-vous.</a>
+                        <Link to="/login" className="">Connectez-vous.</Link>
                     </div>
                     <div className="submit-button-container">
                         <button onClick={handleClickToSubmit}>S'INSCRIRE</button>

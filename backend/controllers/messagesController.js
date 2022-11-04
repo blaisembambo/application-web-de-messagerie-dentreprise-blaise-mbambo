@@ -12,6 +12,12 @@ const getMessages = (req,res) => {
         .catch(err => res.json(err))
 }
 
+const getUserAllMessages = (req,res) => {
+    Message.find({ $or: [ { senderId: req.body.userId}, { receiverId: req.body.userId } ] } )
+        .then(messages => res.json(messages))
+        .catch(err => res.json(err))
+}
+
 const getConversion = (req,res) => {
     Message.find({
         $or: [
@@ -33,4 +39,4 @@ const createMessage = (req,res) => {
     .catch(err  => res.json(err))
 }
 
-module.exports = {getMessage,getMessages,createMessage,getConversion}
+module.exports = {getMessage,getMessages,createMessage,getConversion,getUserAllMessages}

@@ -3,7 +3,7 @@ export const initialState = {
     user:{},
     currentContact:{},
     messages: [],
-    room:""
+    room: ""
   }
 
 const reducer = (state,action) => {
@@ -27,6 +27,7 @@ const reducer = (state,action) => {
         case 'setRoom' : {
             return {...state,'room':action.payload}
         }
+            
     
         default:
             return state;

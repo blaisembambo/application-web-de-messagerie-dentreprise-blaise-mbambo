@@ -24,3 +24,6 @@
     bottom: 0;
     left: -10px;
 }
+.image-linked img {
+    width: 100%;
+}

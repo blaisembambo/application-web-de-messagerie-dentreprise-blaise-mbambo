@@ -11,6 +11,8 @@ import { GoSignOut } from "react-icons/go";
 import { BsEmojiSmile } from "react-icons/bs";
 import { AiOutlineCamera } from "react-icons/ai";
 import { BiSend } from "react-icons/bi";
+import { FiSearch } from "react-icons/fi";
+import { BsThreeDotsVertical } from "react-icons/bs";
 import 'emoji-picker-element';
 
 
@@ -40,32 +42,62 @@ function Chat() {
   }
 
   const [users, setUsers] = useState([])
+  const [userAllMessages, setUserAllMessages] = useState([])
+
+  useEffect(() => {
+    axios.get(process.env.REACT_APP_ENDPOINT_TO_CREATE_AND_GET_USERS)
+    .then(users => setUsers(users.data))
+      .catch(err => err)
+    
+    axios.post("http://localhost:4000/messages/",{userId:state.user._id})
+      .then(messages => { setUserAllMessages(messages.data)})
+      .catch(err => console.log(err))
+  }, [])
+
+
+  const [userConversations,setUserConversations] = useState([])
   
   useEffect(() => {
-    axios.get('http://localhost:4000/users/')
-    .then(users => setUsers(users.data))
-    .catch(err => err)
-  }, [])
+       const conversationsUsersIds = userAllMessages.reduce((conversations, message) => {
+      if (message.receiverId !== state.user._id && !conversations.includes(message.receiverId)) {
+        conversations.push(message.receiverId)
+      }
+
+      if (message.senderId !== state.user._id && !conversations.includes(message.senderId)) {
+        conversations.push(message.senderId)
+      }
+      return conversations
+        }, []);
+    
+      conversationsUsersIds.map(userId => {/*setUserConversations();*/ 
+          axios.get(`http://localhost:4000/users/1/${userId}`)
+          .then(user => {setUserConversations(user.data)})
+          .catch(err => console.log(err))
+    })
+
+  },[userAllMessages])
   
   const [emojiPickerContainerStyle, setEmojiPickerContainerStyle] = useState({
-    display:'none'
+    display: 'none'
   })
   
   function handleEmojiIconOnClick() {
     setEmojiPickerContainerStyle(prev => prev.display === 'block' ? ({display:'none'}) : ({display:'block'}))
   }
 
-  function handleCameraIconOnclick() {
-  const myWidget = window.cloudinary.createUploadWidget({
-  cloudName: 'bintole', 
-  uploadPreset: 'sds1g2ni'}, (error, result) => { 
-    if (!error && result && result.event === "success") { 
-      console.log('Done! Here is the image info: ', result.info);
-      sendMessage(state.user._id,state.currentContact._id,{type:"image",url:result.info.url,public_id:result.info.public_id},state.room)
-    }
-  }
-  )
-    myWidget.open();
+  function handleFileInputOnchange(e) {
+    const file = e.target.files[0];
+
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', process.env.REACT_APP_CLOUDINARY_UPLOADPRESSET);
+
+    axios.post(`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUDNAME}/image/upload`,formData)
+            .then(res => {
+              console.log(res.data)
+              sendMessage(state.user._id,state.currentContact._id,{type:"image",url:res.data.url,public_id:res.data.public_id},state.room)
+            })
+            .catch(err =>err) 
   }
 
   useEffect(() => {
@@ -74,7 +106,7 @@ function Chat() {
       setInput(prev => ({...prev,"message":prev.message + event.detail.unicode}))
     });
 },[])
-  // console.log(state.messages)
+  console.log("outcome", userConversations)
   return(
     <div className='chat-container'>
 
@@ -94,11 +126,19 @@ function Chat() {
 
       {/*begining of conversations and user search */}
         <div className='recentConversations-userSearch-container'>
-            <div className='search-container'>
-              <input type='text' onChange={handleInputChange} name='search' id='search' className='searchinput' />
-            </div>
+          <div className='search-container'>
+              <div className='search-icon'>
+                <FiSearch />
+              </div>
+              <div className='search-input-container'>
+                <input type='text' placeholder='Rechercher un contact' onChange={handleInputChange} name='search' id='search' className='searchinput' />
+              </div>
+              <div className='three-dot-icon'>
+                <BsThreeDotsVertical />
+              </div>
+          </div>
           <div className='recentConversations-wrapper'>
-            <h3>Utilisateurs</h3>
+            <h3>Conversations</h3>
             <div className='recentConversations-container'>
               {users.map((user,index) => user._id === state.user._id ? '' : <User key={user + '' + index} user = {user}/>)}
             </div>
@@ -129,7 +169,7 @@ function Chat() {
                   <input type='text' onChange={handleInputChange} name='message' id='message' className='messageinput' value={input.message} />
                   <div className='emojiandphotoicons'>
                     <span className='emoji-icon-container' onClick={handleEmojiIconOnClick}><BsEmojiSmile /></span>
-                    <span className='media-input-container' onClick={handleCameraIconOnclick}><AiOutlineCamera /></span>
+                    <label htmlFor='file-input' className='media-input-container'><AiOutlineCamera /><input type='file' id='file-input' name='file-input' className='file-input' onChange={handleFileInputOnchange} accept="image/*" /></label>
                   <div className='emoji-picker-container' style={emojiPickerContainerStyle}>
                     <emoji-picker></emoji-picker>
                   </div>

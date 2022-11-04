@@ -12,6 +12,9 @@
     position: relative;
     font-size: 14px;
 }
+.image-linked img{
+    width: 100%;
+}
 
 .received-message-triangle {
 	width: 0;

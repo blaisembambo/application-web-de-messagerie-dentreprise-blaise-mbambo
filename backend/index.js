@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const http = require('http')
 const app = express()
@@ -17,7 +18,7 @@ app.use('/messages/',messagesRoute)
 
 const io = socketio(server,{
   cors:{
-    origin:'http://localhost:3000'
+    origin:process.env.FRONTEND_URL
   }
 })
 
@@ -58,5 +59,6 @@ io.on('connection', socket => {
 
 })
 
-server.listen('4000')
+const port = process.env.PORT || 4000;
+server.listen(port)
 
