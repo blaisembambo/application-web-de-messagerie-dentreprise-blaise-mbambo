@@ -1,4 +1,14 @@
 const {User} = require('../models/userSchema')
+const bcrypt = require("bcrypt")
+const passport = require("passport");
+const session = require("express-session");
+const LocalStrategy = require("passport-local");
+
+let strategy = new LocalStrategy(function verify(userlogin, password, done) {
+  
+})
+
+
 
 const getUser2 = (req,res) => {
     User.findById(req.params.id)
@@ -19,18 +29,25 @@ const getUsers = (req,res) => {
 }
 
 const createUser = (req,res) => {
-    if(req.body.password == req.body.confirmpassword){
-        User.create({
-            firstName : req.body.firstname,
-            lastName : req.body.lastname,
+    if (req.body.password == req.body.confirmpassword) {
+        bcrypt.hash(req.body.password, 10)
+            .then(hash => {
+            
+            User.create({
+            firstName : req.body.firstName,
+            lastName : req.body.lastName,
             image :req.body.image,
             email :req.body.email,
-            password : req.body.password
+            password : hash
         }).then(user => {
             console.log(user)
-            res.json(user)
+            res.status(201).json(user)
         })
-        .catch(err  => res.json(err))    
+        .catch(err  => res.status(400).json(err))
+
+        })
+        .catch(err  => res.status(500).json(err))
+            
     }
 
     if(req.body.password != req.body.confirmpassword){

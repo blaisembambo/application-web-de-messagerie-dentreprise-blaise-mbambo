@@ -22,7 +22,7 @@ export default function Login() {
 
     const handleClickToSubmit = () => {
         
-            axios.post(process.env.REACT_APP_ENDPOINT_TO_GET_ONE_USER,{
+            axios.post("http://localhost:4000/users/1",{
                 email :input.email,
                 password : input.password
             })

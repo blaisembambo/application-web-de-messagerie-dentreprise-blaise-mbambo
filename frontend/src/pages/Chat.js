@@ -55,23 +55,33 @@ function Chat() {
   }, [])
 
 
-  const [userConversations,setUserConversations] = useState([])
+  const [userConversations, setUserConversations] = useState([])
+  
   
   useEffect(() => {
-       const conversationsUsersIds = userAllMessages.reduce((conversations, message) => {
-      if (message.receiverId !== state.user._id && !conversations.includes(message.receiverId)) {
-        conversations.push(message.receiverId)
+      
+       const conversationsUsersIds = userAllMessages.reduce((conversationsContactsIds, message) => {
+      if (message.receiverId !== state.user._id && !conversationsContactsIds.includes(message.receiverId)) {
+        conversationsContactsIds.push({ contactId:message.receiverId })
       }
 
-      if (message.senderId !== state.user._id && !conversations.includes(message.senderId)) {
-        conversations.push(message.senderId)
+      if (message.senderId !== state.user._id && !conversationsContactsIds.includes(message.senderId)) {
+        conversationsContactsIds.push({ contactId: message.senderId })
       }
-      return conversations
+         let newConversationsContactsIds = [];
+         if (conversationsContactsIds.length > 0) {
+        
+        newConversationsContactsIds = conversationsContactsIds.map(conversation => {
+          
+        })
+           
+         }
+      return conversationsContactsIds
         }, []);
-    
-      conversationsUsersIds.map(userId => {/*setUserConversations();*/ 
-          axios.get(`http://localhost:4000/users/1/${userId}`)
-          .then(user => {setUserConversations(user.data)})
+    console.log("conversations user ids", conversationsUsersIds)
+      conversationsUsersIds.map(conversationUserId => {/*setUserConversations();*/ 
+          axios.get(`http://localhost:4000/users/1/${conversationUserId.contactId}`)
+          .then(user => {setUserConversations(prev => [...prev,user.data])})
           .catch(err => console.log(err))
     })
 

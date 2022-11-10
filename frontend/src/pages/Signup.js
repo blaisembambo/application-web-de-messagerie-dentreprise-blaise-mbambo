@@ -19,12 +19,13 @@ export default function Signup() {
 
     const handleClickToSubmit = () => {
         if(input.password === input.confirmpassword){
-            axios.post(process.env.REACT_APP_ENDPOINT_TO_CREATE_AND_GET_USERS,{
-                firstname : input.firstname,
-                lastname : input.lastname,
+            axios.post("http://localhost:4000/users/",{
+                firstName : input.firstname,
+                lastName : input.lastname,
                 image :'image',
                 email :input.email,
-                password : input.password
+                password: input.password,
+                confirmpassword:input.confirmpassword
             })
             .then(res => {
                 console.log(res)

@@ -1,4 +1,5 @@
 const mongoose = require('../config/db_connection')
+const uniqueValidator = require("mongoose-unique-validator");
 
 const {Schema,model} = mongoose
 
@@ -17,13 +18,16 @@ const userSchema = new Schema({
     },
     email : {
         type:String,
-        required:true
+        required: true,
+        unique: true
     },
     password : {
         type:String,
         required:true
     }
 })
+
+userSchema.plugin(uniqueValidator); 
 
 const User = model("User",userSchema);
 

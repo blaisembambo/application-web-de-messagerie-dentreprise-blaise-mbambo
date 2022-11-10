@@ -8,7 +8,7 @@ import {scale} from '@cloudinary/transformation-builder-sdk/actions/resize';
 
 
 export default function MessageSent({message}) {
-    const content =message ? message.content : ''
+    const content = message ? message.content : ''
     const date = ''
     const time = ''
 
