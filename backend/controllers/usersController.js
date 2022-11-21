@@ -7,13 +7,16 @@ const LocalStrategy = require("passport-local");
 let strategy = new LocalStrategy(function verify(userlogin, password, done) {});
 
 const getUser2 = (req, res) => {
-  User.findById(req.params.id)
+  User.findById(req.params.id,{password:0})
     .then((user) => res.json(user))
     .catch((err) => res.json(err));
 };
 
 const getUser = (req, res) => {
-  User.findOne({ email: req.body.email, password: req.body.password })
+  User.findOne(
+    { email: req.body.email, password: req.body.password },
+    { password: 0 }
+  )
     .then((user) => res.json(user))
     .catch((err) => res.json(err));
 };

@@ -1,7 +1,10 @@
 const passport = require("passport");
 
 const authFilter = (req, res, next) => {
-  passport.authenticate("local", function (err, user, info) {
+
+  passport.authenticate(
+    "local",
+    function (err, user, info) {
     if (err) {
       return next(err);
     }
@@ -14,7 +17,8 @@ const authFilter = (req, res, next) => {
       }
       return res.status(200).json(user);
     });
-  })(req, res, next);
+  }
+  )(req, res, next);
 };
 
 module.exports = authFilter;

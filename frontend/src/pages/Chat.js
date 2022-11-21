@@ -1,6 +1,7 @@
 import '../styles/Chat.css';
 import socket from '../utils/socketIo';
-import {useEffect, useState} from 'react'
+import { useEffect, useState } from 'react'
+import { useNavigate } from "react-router-dom";
 import picture from '../assets/papa-jules.png'
 import axios from 'axios';
 import User from '../components/User';
@@ -17,7 +18,30 @@ import 'emoji-picker-element';
 
 
 function Chat() {
-  const [state,dispatch] = useStateValue()
+
+    const [state, dispatch] = useStateValue();
+    const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!sessionStorage.getItem("currentUser")) {
+      navigate("/");
+      dispatch({
+        type: "setUser",
+        payload: null
+      });
+      dispatch({ type: "setUserLoggedIn" });
+    }
+
+    if (JSON.parse(sessionStorage.getItem("currentUser"))) { 
+      dispatch({
+        type: "setUser",
+        payload: JSON.parse(sessionStorage.getItem("currentUser"))
+      });
+      dispatch({ type: "setUserLoggedIn" });
+
+    }
+  },[])
+
 
   const [input,setInput] = useState({
     message:'',
@@ -26,6 +50,16 @@ function Chat() {
 
   const handleInputChange = e => {
     setInput(prevState => ({...prevState,[e.target.name]:e.target.value}))
+  }
+  
+  const handleLogout = () => {
+    sessionStorage.clear();
+    dispatch({
+      type: "setUser",
+      payload: null
+    });
+    dispatch({ type: "setUserLoggedIn" });
+    navigate("/");
   }
   
   
@@ -128,7 +162,7 @@ function Chat() {
         <div title='cliquez pour ouvrir les conversations' className='conversation-icon-container'>
           <BsChatDotsFill />
         </div>
-        <div className='logout-icon-container'>
+        <div className='logout-icon-container' onClick={handleLogout}>
           <GoSignOut />
         </div>
       </div>

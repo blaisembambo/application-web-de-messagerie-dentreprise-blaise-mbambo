@@ -1,6 +1,6 @@
 import '../styles/Login.css'
 import axios from 'axios'
-import { useState,useContext } from 'react'
+import { useState,useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useStateValue } from '../utils/stateProvider'
 import { Link } from 'react-router-dom'
@@ -9,14 +9,20 @@ import { BsChatDotsFill } from "react-icons/bs";
 
 export default function Login() {
 
-    const [state,dispatch] = useStateValue()
-    const navigate = useNavigate()
+      const [state, dispatch] = useStateValue();
+      const navigate = useNavigate();
 
-    const [input,setInput] = useState({
-        email:'',
-        password:''
-    })
+  useEffect(() => {
+    if (sessionStorage.getItem("currentUser")) {
+      const user = JSON.parse(sessionStorage.getItem("currentUser"));
+      navigate("/app/" + user._id);
+    }
+},[])
 
+      const [input, setInput] = useState({
+        email: "",
+        password: ""
+      });
     const handleInputChange = e => {
         setInput(prevState => ({ ...prevState, [e.target.name]: e.target.value }))
         
@@ -31,8 +37,7 @@ export default function Login() {
         .then((res) => {
           if (res.data) {
             navigate("/app/" + res.data._id);
-            dispatch({ type: "setUser", payload: res.data });
-            dispatch({ type: "setUserLoggedIn" });
+            sessionStorage.setItem("currentUser", JSON.stringify(res.data));
           }
           if (res.data == null) {
             navigate("/");

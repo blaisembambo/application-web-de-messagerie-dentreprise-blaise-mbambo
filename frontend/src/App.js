@@ -24,23 +24,20 @@ function App() {
   const navigate = useNavigate()
 
   console.log('state : ',state)
-  return(
-
- 
-    <div className='app-container'>
-            <Routes>
-                    <Route path='/' element={<NavigateToLogin />}/>
-                    <Route path='/' element={<NavigateToChat />}/>
-                    <Route  path='/app/:userid' element={<Chat /> }>
-                      <Route path=':contactid' element={<Messages /> }/>
-                    </Route>
-                    <Route  path='/signup' element={<Signup /> }/>
-                    <Route  path='/login' element={<Login /> }/>
-            </Routes>
-        </div>
-
-    
-  )
+  return (
+    <div className="app-container">
+      <Routes>
+        <Route path="/" element={<NavigateToLogin />} />
+        <Route path="/" element={<NavigateToChat />} />
+        <Route path="/app" element={<Login />} />
+        <Route path="/app/:userid" element={<Chat />}>
+          <Route path=":contactid" element={<Messages />} />
+        </Route>
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </div>
+  );
 }
 
 export default App;
