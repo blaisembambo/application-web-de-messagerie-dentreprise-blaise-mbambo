@@ -11,6 +11,7 @@ import { BsChatDotsFill } from "react-icons/bs";
 import { GoSignOut } from "react-icons/go";
 import { BsEmojiSmile } from "react-icons/bs";
 import { AiOutlineCamera } from "react-icons/ai";
+import { RiWechatFill } from "react-icons/ri";
 import { BiSend } from "react-icons/bi";
 import { FiSearch } from "react-icons/fi";
 import { BsThreeDotsVertical } from "react-icons/bs";
@@ -89,6 +90,7 @@ function Chat() {
 
 
   const [userConversations, setUserConversations] = useState([])
+  const [conversationIconIsRemoved,setConversationIconIsRemoved] = useState(false)
   
   
   useEffect(() => {
@@ -150,84 +152,151 @@ function Chat() {
     });
 },[])
   console.log("outcome", userConversations)
-  return(
-    <div className='chat-container'>
-
+  return (
+    <div className="chat-container">
       {/*begining of user profile */}
-      <div className='user-profile'>
-        <div className='user-picture-container'>
-          <img src={picture} className='user-picture profile-picture' />
+      <div className="user-profile">
+        <div className="user-picture-container">
+          <img src={picture} className="user-picture profile-picture" />
         </div>
-        <div title='cliquez pour ouvrir les conversations' className='conversation-icon-container'>
+        <div
+          title="cliquez pour ouvrir les conversations"
+          className="conversation-icon-container"
+        >
           <BsChatDotsFill />
         </div>
-        <div className='logout-icon-container' onClick={handleLogout}>
+        <div className="logout-icon-container" onClick={handleLogout}>
           <GoSignOut />
         </div>
       </div>
       {/*end of user profile */}
 
       {/*begining of conversations and user search */}
-        <div className='recentConversations-userSearch-container'>
-          <div className='search-container'>
-              <div className='search-icon'>
-                <FiSearch />
-              </div>
-              <div className='search-input-container'>
-                <input type='text' placeholder='Rechercher un contact' onChange={handleInputChange} name='search' id='search' className='searchinput' />
-              </div>
-              <div className='three-dot-icon'>
-                <BsThreeDotsVertical />
-              </div>
+      <div className="recentConversations-userSearch-container">
+        <div className="search-container">
+          <div className="search-icon">
+            <FiSearch />
           </div>
-          <div className='recentConversations-wrapper'>
-            <h3>Conversations</h3>
-            <div className='recentConversations-container'>
-              {users.map((user,index) => user._id === state.user._id ? '' : <User key={user + '' + index} user = {user}/>)}
-            </div>
+          <div className="search-input-container">
+            <input
+              type="text"
+              placeholder="Rechercher un contact"
+              onChange={handleInputChange}
+              name="search"
+              id="search"
+              className="searchinput"
+            />
+          </div>
+          <div className="three-dot-icon">
+            <BsThreeDotsVertical />
           </div>
         </div>
+        <div className="recentConversations-wrapper">
+          <h3>Conversations</h3>
+          <div className="recentConversations-container">
+            {users.map((user, index) =>
+              user._id === state.user._id ? (
+                ""
+              ) : (
+                <User
+                  key={user + "" + index}
+                  user={user}
+                  setConversationIconIsRemoved={setConversationIconIsRemoved}
+                />
+              )
+            )}
+          </div>
+        </div>
+      </div>
       {/*end of conversations and user search */}
 
       {/*begining of conversation */}
-      <div className='conversation-container'>
-        <div className='contactProfile-cotainer'>
-          <div className='contactPicture-container'>
-            <img src={picture} className='user-profile-picture-in-conversation' />
+      <div className="conversation-container">
+        <div className="contactProfile-cotainer">
+          <div className="contactPicture-container">
+            <img
+              src={picture}
+              className="user-profile-picture-in-conversation"
+            />
           </div>
-          <div className='contactNameAndStatus'>
-            <p className='contact-name'>{state.currentContact ? state.currentContact.firstName : ''}</p>
-            <p className='contact-status'>online</p>
+          <div className="contactNameAndStatus">
+            <p className="contact-name">
+              {state.currentContact ? state.currentContact.firstName : ""}
+            </p>
+            <p className="contact-status">online</p>
           </div>
         </div>
-        <div className='messagescontainerandinputscontainer'>
-          <div className='messagescontainerandinputswrapper'>
-              <div className='messages-container'>
-                  <div className='messages-wrapper'>
-                    <Outlet/>
+        <div className="messagescontainerandinputscontainer">
+          <div className="messagescontainerandinputswrapper">
+            <div className="messages-container">
+              <div className="messages-wrapper">
+                {!conversationIconIsRemoved ? (
+                  <div className="converstion-icon">
+                    <RiWechatFill />
                   </div>
+                ) : (
+                  <Outlet />
+                )}
               </div>
-              <div className='inputscontainer'>
-                <div className='textemojiandfileinputs'>
-                  <input type='text' onChange={handleInputChange} name='message' id='message' className='messageinput' value={input.message} />
-                  <div className='emojiandphotoicons'>
-                    <span className='emoji-icon-container' onClick={handleEmojiIconOnClick}><BsEmojiSmile /></span>
-                    <label htmlFor='file-input' className='media-input-container'><AiOutlineCamera /><input type='file' id='file-input' name='file-input' className='file-input' onChange={handleFileInputOnchange} accept="image/*" /></label>
-                  <div className='emoji-picker-container' style={emojiPickerContainerStyle}>
+            </div>
+            <div className="inputscontainer">
+              <div className="textemojiandfileinputs">
+                <input
+                  type="text"
+                  onChange={handleInputChange}
+                  name="message"
+                  id="message"
+                  className="messageinput"
+                  value={input.message}
+                />
+                <div className="emojiandphotoicons">
+                  <span
+                    className="emoji-icon-container"
+                    onClick={handleEmojiIconOnClick}
+                  >
+                    <BsEmojiSmile />
+                  </span>
+                  <label htmlFor="file-input" className="media-input-container">
+                    <AiOutlineCamera />
+                    <input
+                      type="file"
+                      id="file-input"
+                      name="file-input"
+                      className="file-input"
+                      onChange={handleFileInputOnchange}
+                      accept="image/*"
+                    />
+                  </label>
+                  <div
+                    className="emoji-picker-container"
+                    style={emojiPickerContainerStyle}
+                  >
                     <emoji-picker></emoji-picker>
                   </div>
                 </div>
-                </div>
-                {/* <div className='sendbuttoncontainer'> */}
-                  <button className='sendbutton' onClick={() => sendMessage(state.user._id,state.currentContact._id,{type:"text",content:input.message},state.room)}><BiSend /></button>
-                {/* </div> */}
               </div>
+              {/* <div className='sendbuttoncontainer'> */}
+              <button
+                className="sendbutton"
+                onClick={() =>
+                  sendMessage(
+                    state.user._id,
+                    state.currentContact._id,
+                    { type: "text", content: input.message },
+                    state.room
+                  )
+                }
+              >
+                <BiSend />
+              </button>
+              {/* </div> */}
+            </div>
           </div>
         </div>
       </div>
       {/*end of conversation */}
     </div>
-  )
+  );
 }
 
 export default Chat;
