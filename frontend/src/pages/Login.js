@@ -38,6 +38,12 @@ export default function Login() {
           if (res.data) {
             navigate("/app/" + res.data._id);
             sessionStorage.setItem("currentUser", JSON.stringify(res.data));
+            dispatch({
+              type: "setUser",
+              payload: JSON.parse(sessionStorage.getItem("currentUser"))
+            });
+            dispatch({ type: "setUserLoggedIn" });
+
           }
           if (res.data == null) {
             navigate("/");
@@ -47,8 +53,9 @@ export default function Login() {
         e.preventDefault();
     };
 
-    return (
-      <div className="login-wrapper">
+  return (
+      
+    <div className="login-wrapper">
         <div className="left-side">
           <div className="icon-and-title-wrapper">
             <BsChatDotsFill />
